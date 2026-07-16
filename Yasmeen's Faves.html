@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Yasmeen's Aesthetic Favorites 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --pink-light: #fff0f5;
+            --pink-accent: #ffb7c5;
+            --pink-dark: #ff8da1;
+            --soft-yellow: #fff9db;
+            --text-color: #5c4a4a;
+            --white-glass: rgba(255, 255, 255, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffeef8 0%, #ffd3e8 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 🌸 Yasmeen Watermark Background 🌸 */
+        .watermark-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            opacity: 0.04; /* Very subtle and elegant */
+            font-family: 'Caveat', cursive;
+            font-size: 5rem;
+            color: #ff4d6d;
+            transform: rotate(-15deg) scale(1.1);
+            user-select: none;
+        }
+        .watermark-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CSS Floating Flowers Animation */
+        .flower-petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .petal {
+            position: absolute;
+            background-color: var(--pink-accent);
+            border-radius: 150% 0 150% 0;
+            opacity: 0.7;
+            animation: float 10s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(-10%) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Scrapbook Styling */
+        .container {
+            background: var(--white-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 3px solid #fff;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 183, 197, 0.4);
+            width: 100%;
+            max-width: 550px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: var(--pink-dark);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px #fff;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #8c7373;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: #ffe3e8;
+            height: 10px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 9%; /* Updated initial progress width dynamically in JS */
+            background: linear-gradient(90deg, var(--pink-accent), var(--pink-dark));
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Question Form Elements */
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-label {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--pink-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px dashed var(--pink-accent);
+            border-radius: 20px;
+            background-color: #fff;
+            outline: none;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .input-field:focus {
+            border-style: solid;
+            border-color: var(--pink-dark);
+            background-color: var(--pink-light);
+            box-shadow: 0 0 10px rgba(255, 141, 161, 0.2);
+        }
+
+        /* Color Picker Customizer */
+        .color-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background-color: var(--pink-accent);
+            transition: transform 0.3s ease;
+        }
+        .color-input-btn {
+            background: #fff;
+            border: 2px dashed var(--pink-accent);
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+            position: relative;
+        }
+        .color-input-btn input[type="color"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+        }
+
+        /* Button Styling */
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-prev {
+            background-color: #fff;
+            color: var(--pink-dark);
+            border: 2px solid var(--pink-accent);
+        }
+        .btn-prev:hover {
+            background-color: var(--pink-light);
+        }
+        .btn-next, .btn-submit {
+            background: linear-gradient(135deg, var(--pink-accent) 0%, var(--pink-dark) 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 141, 161, 0.4);
+        }
+        .btn-next:hover, .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 141, 161, 0.6);
+        }
+
+        /* Final Result Card */
+        #result-card {
+            display: none;
+            animation: scaleUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .result-header {
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
+            color: var(--pink-dark);
+            margin-bottom: 20px;
+        }
+        .diary-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: left;
+            border: 2px solid var(--pink-light);
+            box-shadow: inset 0 0 15px rgba(255, 183, 197, 0.2);
+            margin-bottom: 25px;
+        }
+        .diary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ffe3e8;
+        }
+        .diary-item:last-child {
+            border-bottom: none;
+        }
+        .diary-label {
+            font-weight: 700;
+            color: #a68c8c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .diary-value {
+            font-weight: 700;
+            color: var(--pink-dark);
+            text-align: right;
+            max-width: 60%;
+            word-wrap: break-word;
+        }
+
+        .flower-stamp {
+            font-size: 3rem;
+            color: var(--pink-accent);
+            margin: 15px 0;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Decorative Polaroid-like Frame */
+        .polaroid {
+            background: white;
+            padding: 15px 15px 30px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            transform: rotate(-2deg);
+            margin-bottom: 25px;
+            display: inline-block;
+        }
+        .polaroid-img {
+            width: 120px;
+            height: 120px;
+            background: #ffe3e8;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+        }
+
+        .heart-icon {
+            color: #ff4d6d;
+            animation: beat .3s infinite alternate;
+        }
+        @keyframes beat{
+            to { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-bg" id="watermark"></div>
+
+    <div class="flower-petals" id="petals"></div>
+
+    <div class="container">
+        <div id="welcome-screen" class="step active">
+            <div class="polaroid">
+                <div class="polaroid-img">🌸</div>
+            </div>
+            <h1>Yasmeen's Diary</h1>
+            <p class="subtitle">A cute little space to save your favorite things! ✨</p>
+            <p style="margin-bottom: 30px; line-height: 1.6; font-size: 1.05rem;">
+                Hey bestie! I made this little space just for you. Take a second to fill out your absolute favorites so we can keep them locked in our aesthetic memories forever. 💕
+            </p>
+            <button class="btn btn-submit" onclick="startForm()" style="width: 100%;">
+                Let's Start! <i class="fa-solid fa-heart-pulse"></i>
+            </button>
+        </div>
+
+        <div id="form-container" style="display: none;">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress"></div>
+            </div>
+
+            <div class="step-question" data-step="1">
+                <div class="question-label"><i class="fa-solid fa-palette"></i> What is your favorite color?</div>
+                <div class="color-selector">
+                    <div class="color-preview" id="color-preview"></div>
+                    <div class="color-input-btn">
+                        <i class="fa-solid fa-eye-dropper"></i> Pick Color
+                        <input type="color" id="fav-color" value="#ffb7c5" oninput="updateColorPreview(this.value)">
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="color-name" class="input-field" placeholder="Or type its name (e.g., Baby Pink)">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="2" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-mug-hot"></i> What's your go-to favorite drink?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-drink" class="input-field" placeholder="Smoothie? guava juice? coke? pepsi?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="3" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-utensils"></i> What food comfort-charms you?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-food" class="input-field" placeholder="lasagna, Pasta, BBQ...?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="4" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-ice-cream"></i> What's your sweet tooth dessert?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-dessert" class="input-field" placeholder="Chocolate cake, tiramisu, ice cream?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="5" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-film"></i> Your all-time favorite movie?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-movie" class="input-field" placeholder="Ghibli films? crime?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="6" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-tv"></i> What series can you binge forever?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-series" class="input-field" placeholder="9-1-1...?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="7" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-clapperboard"></i> Your comfort K-Drama?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-kdrama" class="input-field" placeholder="Teach you a lesson, Crash Landing on You,My royal nemesis..?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="8" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Favorite Anime?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-anime" class="input-field" placeholder="AOT, Spy x Family, Jujutsu Kaisen?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="9" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-music"></i> What song is on loop in your head?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-song" class="input-field" placeholder="Title by Artist 🎧">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="10" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-candy-cane"></i> What's your favorite candy?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-candy" class="input-field" placeholder="Wafers, chocolate, gummies?">
+                </div>
+            </div>
+
+            <div class="step-question" data-step="11" style="display: none;">
+                <div class="question-label"><i class="fa-solid fa-sparkles"></i> What's your favorite activity or hobby?</div>
+                <div class="input-wrapper">
+                    <input type="text" id="fav-activity" class="input-field" placeholder="Reading, painting, gaming, shopping?">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-prev" id="prev-btn" onclick="prevStep()" style="visibility: hidden;">
+                    <i class="fa-solid fa-chevron-left"></i> Back
+                </button>
+                <button class="btn btn-next" id="next-btn" onclick="nextStep()">
+                    Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="result-card">
+            <div class="flower-stamp">🌸</div>
+            <h2 class="result-header">Yasmeen's Favorites</h2>
+            <p class="subtitle">Your official aesthetic profile is ready! ✨</p>
+            
+            <div class="diary-card">
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-palette"></i> Color</span>
+                    <span class="diary-value" id="res-color" style="padding: 2px 8px; border-radius: 8px;">Pink</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-mug-hot"></i> Drink</span>
+                    <span class="diary-value" id="res-drink">Matcha Latte</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-utensils"></i> Food</span>
+                    <span class="diary-value" id="res-food">Sushi</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-ice-cream"></i> Dessert</span>
+                    <span class="diary-value" id="res-dessert">Macarons</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-film"></i> Movie</span>
+                    <span class="diary-value" id="res-movie">Howl's Moving Castle</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-tv"></i> Series</span>
+                    <span class="diary-value" id="res-series">Gilmore Girls</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-clapperboard"></i> K-Drama</span>
+                    <span class="diary-value" id="res-kdrama">Twenty-Five Twenty-One</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Anime</span>
+                    <span class="diary-value" id="res-anime">Sailor Moon</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-music"></i> Song</span>
+                    <span class="diary-value" id="res-song">Cruel Summer</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-candy-cane"></i> Candy</span>
+                    <span class="diary-value" id="res-candy">Gummies</span>
+                </div>
+                <div class="diary-item">
+                    <span class="diary-label"><i class="fa-solid fa-sparkles"></i> Activity</span>
+                    <span class="diary-value" id="res-activity">Reading</span>
+                </div>
+            </div>
+
+            <p style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+                Handcrafted with tons of <i class="fa-solid fa-heart heart-icon"></i> for Yasmeen.
+            </p>
+
+            <button class="btn btn-submit" onclick="restartDiary()" style="width: 100%;">
+                <i class="fa-solid fa-arrow-rotate-left"></i> Refill Diary
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Generate the soft 'Yasmeen' watermark grid background dynamically
+        const watermarkContainer = document.getElementById('watermark');
+        for (let i = 0; i < 16; i++) {
+            const div = document.createElement('div');
+            div.className = 'watermark-item';
+            div.innerText = 'Yasmeen';
+            watermarkContainer.appendChild(div);
+        }
+
+        // Generate floating CSS cherry blossom petals
+        const petalsContainer = document.getElementById('petals');
+        const petalColors = ['#ffb7c5', '#ffccd5', '#ffb3c1', '#ff8da1'];
+        for (let i = 0; i < 20; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // Random styling for realistic natural floating
+            const size = Math.random() * 15 + 10 + 'px';
+            petal.style.width = size;
+            petal.style.height = size;
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDelay = Math.random() * 8 + 's';
+            petal.style.animationDuration = Math.random() * 12 + 8 + 's';
+            petal.style.backgroundColor = petalColors[Math.floor(Math.random() * petalColors.length)];
+            
+            petalsContainer.appendChild(petal);
+        }
+
+        // State variables for pagination (Updated to 11 questions now!)
+        let currentStep = 1;
+        const totalSteps = 11;
+
+        function startForm() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('form-container').style.display = 'block';
+            updateProgressBar();
+        }
+
+        function updateColorPreview(val) {
+            document.getElementById('color-preview').style.backgroundColor = val;
+        }
+
+        function updateProgressBar() {
+            const percentage = (currentStep / totalSteps) * 100;
+            document.getElementById('progress').style.width = percentage + '%';
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                // Hide current active question
+                document.querySelector(`[data-step="${currentStep}"]`).style.display = 'none';
+                currentStep++;
+                // Show next active question
+                document.querySelector(`[data-step="${currentStep}"]`).style.display = 'block';
+                
+                // Show back button
+                document.getElementById('prev-btn').style.visibility = 'visible';
+
+                // If on final step, change 'Next' button to 'Finish'
+                if (currentStep === totalSteps) {
+                    document.getElementById('next-btn').innerHTML = `Finish <i class="fa-solid fa-heart"></i>`;
+                    document.getElementById('next-btn').classList.add('btn-submit');
+                } else {
+                    document.getElementById('next-btn').innerHTML = `Next <i class="fa-solid fa-chevron-right"></i>`;
+                    document.getElementById('next-btn').classList.remove('btn-submit');
+                }
+                updateProgressBar();
+            } else {
+                submitForm();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                // Hide current active question
+                document.querySelector(`[data-step="${currentStep}"]`).style.display = 'none';
+                currentStep--;
+                // Show previous active question
+                document.querySelector(`[data-step="${currentStep}"]`).style.display = 'block';
+
+                // Revert 'Finish' button text if backtracked
+                document.getElementById('next-btn').innerHTML = `Next <i class="fa-solid fa-chevron-right"></i>`;
+                document.getElementById('next-btn').classList.remove('btn-submit');
+
+                if (currentStep === 1) {
+                    document.getElementById('prev-btn').style.visibility = 'hidden';
+                }
+                updateProgressBar();
+            }
+        }
+
+        function submitForm() {
+            // Collect Form Values
+            const colorHex = document.getElementById('fav-color').value;
+            const colorText = document.getElementById('color-name').value.trim() || colorHex;
+            const drink = document.getElementById('fav-drink').value.trim() || 'No answer 🌸';
+            const food = document.getElementById('fav-food').value.trim() || 'No answer 🌸';
+            const dessert = document.getElementById('fav-dessert').value.trim() || 'No answer 🌸';
+            const movie = document.getElementById('fav-movie').value.trim() || 'No answer 🌸';
+            const series = document.getElementById('fav-series').value.trim() || 'No answer 🌸';
+            const kdrama = document.getElementById('fav-kdrama').value.trim() || 'No answer 🌸';
+            const anime = document.getElementById('fav-anime').value.trim() || 'No answer 🌸';
+            const song = document.getElementById('fav-song').value.trim() || 'No answer 🌸';
+            const candy = document.getElementById('fav-candy').value.trim() || 'No answer 🌸';
+            const activity = document.getElementById('fav-activity').value.trim() || 'No answer 🌸';
+
+            // Bind values to results display card
+            const resColor = document.getElementById('res-color');
+            resColor.innerText = colorText;
+            resColor.style.backgroundColor = colorHex;
+            // Handle text contrast color logic dynamically
+            resColor.style.color = getContrastYIQ(colorHex);
+
+            document.getElementById('res-drink').innerText = drink;
+            document.getElementById('res-food').innerText = food;
+            document.getElementById('res-dessert').innerText = dessert;
+            document.getElementById('res-movie').innerText = movie;
+            document.getElementById('res-series').innerText = series;
+            document.getElementById('res-kdrama').innerText = kdrama;
+            document.getElementById('res-anime').innerText = anime;
+            document.getElementById('res-song').innerText = song;
+            document.getElementById('res-candy').innerText = candy;
+            document.getElementById('res-activity').innerText = activity;
+
+            // Transition elements to display summary card
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('result-card').style.display = 'block';
+
+            // 🎉 Launch Aesthetic Bestie Confetti! 🎉
+            fireAestheticConfetti();
+        }
+
+        // Helper to determine text contrast over the custom selected color
+        function getContrastYIQ(hexcolor){
+            hexcolor = hexcolor.replace("#", "");
+            var r = parseInt(hexcolor.substr(0,2),16);
+            var g = parseInt(hexcolor.substr(2,2),16);
+            var b = parseInt(hexcolor.substr(4,2),16);
+            var yiq = ((r*299)+(g*587)+(b*114))/1000;
+            return (yiq >= 128) ? '#5c4a4a' : '#ffffff';
+        }
+
+        function restartDiary() {
+            // Reset state
+            currentStep = 1;
+            document.getElementById('color-name').value = '';
+            document.getElementById('fav-drink').value = '';
+            document.getElementById('fav-food').value = '';
+            document.getElementById('fav-dessert').value = '';
+            document.getElementById('fav-movie').value = '';
+            document.getElementById('fav-series').value = '';
+            document.getElementById('fav-kdrama').value = '';
+            document.getElementById('fav-anime').value = '';
+            document.getElementById('fav-song').value = '';
+            document.getElementById('fav-candy').value = '';
+            document.getElementById('fav-activity').value = '';
+
+            // Reset navigation layouts
+            document.querySelectorAll('.step-question').forEach(el => el.style.display = 'none');
+            document.querySelector('[data-step="1"]').style.display = 'block';
+            document.getElementById('prev-btn').style.visibility = 'hidden';
+            document.getElementById('next-btn').innerHTML = `Next <i class="fa-solid fa-chevron-right"></i>`;
+            document.getElementById('next-btn').classList.remove('btn-submit');
+
+            document.getElementById('result-card').style.display = 'none';
+            document.getElementById('form-container').style.display = 'block';
+            updateProgressBar();
+        }
+
+        function fireAestheticConfetti() {
+            const end = Date.now() + (2 * 1000);
+            const colors = ['#ffb7c5', '#ffccd5', '#fff9db', '#ff8da1'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.8 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.8 },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>
